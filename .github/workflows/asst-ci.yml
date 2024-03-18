@@ -18,7 +18,7 @@ jobs:
         run: docker build -t ghcr.io/abednigolethole/astt-cam-software .
 
       - name: Login to GitHub Container Registry
-        run: echo "${{ secrets.ASTT_PASS }}" | docker login ghcr.io --username "${{ secrets.ASTT_USR }}" --password-stdin
+        run: echo "${{ secrets.ASTT_PASSWORD }}" | docker login ghcr.io --username "${{ secrets.ASTT_USR }}" --password-stdin
 
       - name: Push the astt docker image to GitHub Container Registry
         run: docker push ghcr.io/abednigolethole/astt-cam-software:latest
@@ -72,7 +72,7 @@ jobs:
         poetry config virtualenvs.create false && poetry install
 
     - name: Login to GitHub Container Registry
-      run: echo "${{ secrets.ASTT_PASS }}" | docker login ghcr.io --username "${{ secrets.ASTT_USR }}" --password-stdin
+      run: echo "${{ secrets.ASTT_PASSWORD }}" | docker login ghcr.io --username "${{ secrets.ASTT_USR }}" --password-stdin
     
     - name: Pull image with the ASTT simulator
       run: docker pull ghcr.io/abednigolethole/astt-cam-software
