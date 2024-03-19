@@ -156,7 +156,7 @@ jobs:
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.3
       with: 
-        ssh-private-key: ${{ Deploy keys.SSH_PRIVATE_KEY }}
+        ssh-private-key: ${{ Deploy-keys.SSH_PRIVATE_KEY }}
 
     - name: Deploy to Proxmox Container
       run: |
