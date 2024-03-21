@@ -18,7 +18,7 @@ jobs:
         run: docker build -t ghcr.io/xbaloyi/astt-cam-software-test .
 
       - name: Login to GitHub Container Registry
-        run: echo "${{ secrets.ASTT_TEST_PASS }}" | docker login ghcr.io --username "${{ secrets.ASTT_TEST_USR }}" --password-stdin
+        run: echo "${{ secrets.ASTT_test_PASS }}" | docker login ghcr.io --username "${{ secrets.ASTT_test_USR }}" --password-stdin
 
       - name: Push the astt docker image to GitHub Container Registry
         run: docker push ghcr.io/xbaloyi/astt-cam-software-test:latest
@@ -72,7 +72,7 @@ jobs:
         poetry config virtualenvs.create false && poetry install
 
     - name: Login to GitHub Container Registry
-      run: echo "${{ secrets.ASTT_TEST_PASS }}" | docker login ghcr.io --username "${{ secrets.ASTT_TEST_USR }}" --password-stdin
+      run: echo "${{ secrets.ASTT_test_PASS }}" | docker login ghcr.io --username "${{ secrets.ASTT_test_USR }}" --password-stdin
     
     - name: Pull image with the ASTT simulator
       run: docker pull ghcr.io/xbaloyi/astt-cam-software-test
