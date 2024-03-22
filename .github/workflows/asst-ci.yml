@@ -158,7 +158,7 @@ jobs:
       run: docker pull ghcr.io/xbaloyi/astt-cam-software-test:latest
 
     - name: Run the container
-      run: docker run -d -p ${{ secrets.SERVER_IP }}:5000 ghcr.io/xbaloyi/astt-cam-software-test:latest
+      run: docker run -d --name astt_gui -p 10.8.66.138:5000:5000 ghcr.io/xbaloyi/astt-cam-software-test:latest
 
 
     
