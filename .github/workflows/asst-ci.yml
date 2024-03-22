@@ -149,21 +149,26 @@ jobs:
   deploy:
     needs: publish
     runs-on: self-hosted
+    # steps:
+    # - uses: actions/checkout@v2
+
+    # - name: Setup SSH
+    #   uses: webfactory/ssh-agent@v0.5.3
+    #   with:
+    #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    # # Add steps that use SSH to access your server
+    # - name: SSH Command
+    #   run: ssh ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} "echo 'SSH connection successful'"
+      
     steps:
+    - name: Checkout the code
     - uses: actions/checkout@v2
-
-    - name: Setup SSH
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-    # Add steps that use SSH to access your server
-    - name: SSH Command
-      run: |
-         ssh ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} "echo 'SSH connection successful'"
+    
+    - name : Starting and running ASTT-Software
+    - run: |
          mkdir -p svn
          cd svn/
-         git clone https://github.com/xbaloyi/asst-cam-software-test.git
          docker build -t astt-cam-software .
          python3 src/astt_gui/app.py --h 10.8.66.138 
       
