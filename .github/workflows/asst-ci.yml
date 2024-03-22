@@ -163,10 +163,10 @@ jobs:
       
     steps:
     - name: Checkout the code
-    - uses: actions/checkout@v2
+      uses: actions/checkout@v2
     
     - name : Starting and running ASTT-Software
-    - run: |
+      run: |
          mkdir -p svn
          cd svn/
          docker build -t astt-cam-software .
