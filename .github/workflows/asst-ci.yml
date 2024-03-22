@@ -145,4 +145,19 @@ jobs:
 
     - name: Publish artifact
       run: echo "Will publish the asst software."
-    
+
+  deploy:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with: 
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy to Proxmox Container
+      run: |
+        ssh -o StrictHostKeyChecking=no asst@10.8.66.138 "docker build -t astt-cam-software . && docker stop src/astt_gui/app.py || true && docker run -d --name src/astt_gui/app.py -p 80:5000 astt-cam-software/src/astt_gui/app.py:latest"
