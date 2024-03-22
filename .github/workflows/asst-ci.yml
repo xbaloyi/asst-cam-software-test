@@ -147,7 +147,7 @@ jobs:
       run: echo "Will publish the asst software."
 
   deploy:
-    needs: publish
+    # needs: publish
     runs-on: self-hosted
     # steps:
     # - uses: actions/checkout@v2
