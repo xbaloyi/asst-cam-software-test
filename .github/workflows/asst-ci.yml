@@ -175,8 +175,8 @@ jobs:
     - name: Pull image with the ASTT simulator
       run: docker pull ghcr.io/xbaloyi/astt-cam-software-test
 
-    - name: Adding VCAN module
-      run: sudo apt-get install linux-modules-extra-$(uname -r)
+    # - name: Adding VCAN module
+    #   run: sudo apt-get install linux-modules-extra-$(uname -r)
 
     - name: Starting VCAN Network
       run: sudo sh startVirtualCANInterface.sh
