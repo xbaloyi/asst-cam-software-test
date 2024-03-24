@@ -151,14 +151,20 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Create directory
+      run: |
+       mkdir -p svn
+       cd svn/
+       git clone https://github.com/xbaloyi/asst-cam-software-test.git
+
     - name: Login to GitHub Container Registry
       run: echo "${{ secrets.ASTT_TEST_PASSWORD }}" | docker login ghcr.io --username "${{ secrets.ASTT_TEST_USERNAME }}" --password-stdin
     
     - name: Pull image with the ASTT simulator
-      run: docker pull ghcr.io/xbaloyi/astt-cam-software-test:latest
-
-    - name: Run the container
-      run: docker run -d --name astt_gui -p 10.8.66.138:80:5000 ghcr.io/xbaloyi/astt-cam-software-test:latest
+      run: docker pull ghcr.io/xbaloyi/astt-cam-software-test:latest .
+      
+    - name: Running the app
+      run: python3 src/astt_gui/app.py 
 
 
     
