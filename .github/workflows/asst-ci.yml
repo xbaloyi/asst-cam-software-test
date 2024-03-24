@@ -153,6 +153,7 @@ jobs:
 
     - name: Create directory
       run: |
+       rm -rf myprojct
        mkdir myproject
        cd myproject/
        python3 -m venv myprojectenv
@@ -188,7 +189,7 @@ jobs:
 
     - name: Run ASTT software
       run: |
-       cd ASTT_softwareWork/asst-cam-software-test/asst-cam-software-test/src/astt_gui/
+       cd src/astt_gui
        gunicorn --bind 10.8.66.138:5000 app:app
 
 
