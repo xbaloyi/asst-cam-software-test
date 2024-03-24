@@ -169,6 +169,7 @@ jobs:
         pip install poetry # Installing poetry
         poetry config virtualenvs.create false && poetry install
         pip install wheel
+        pip install gunicorn flask
 
     - name: Login to GitHub Container Registry
       run: echo "${{ secrets.ASTT_TEST_PASSWORD }}" | docker login ghcr.io --username "${{ secrets.ASTT_TEST_USERNAME }}" --password-stdin
