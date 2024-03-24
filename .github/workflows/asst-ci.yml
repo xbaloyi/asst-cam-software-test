@@ -164,7 +164,7 @@ jobs:
       run: docker pull ghcr.io/xbaloyi/astt-cam-software-test:latest .
       
     - name: Running the app
-      run: python3 src/astt_gui/app.py 
+      run: python3 src/astt_gui/app.py --host 10.8.66.138
 
 
     
