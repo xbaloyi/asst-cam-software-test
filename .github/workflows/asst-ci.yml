@@ -153,10 +153,10 @@ jobs:
 
     - name: Create directory
       run: |
-       mkdir -p svn
-       cd svn/
-       python3 -m venv .venv
-       . .venv/bin/activate 
+       mkdir ~/myproject
+       cd ~/myproject"
+       python3 -m venv myprojectenv
+       source myprojectenv/bin/activate
        
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -168,6 +168,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install poetry # Installing poetry
         poetry config virtualenvs.create false && poetry install
+        pip install wheel
 
     - name: Login to GitHub Container Registry
       run: echo "${{ secrets.ASTT_TEST_PASSWORD }}" | docker login ghcr.io --username "${{ secrets.ASTT_TEST_USERNAME }}" --password-stdin
@@ -184,8 +185,9 @@ jobs:
     - name: Run the simulator
       run: docker run -d --network=host ghcr.io/xbaloyi/astt-cam-software-test bash -c "cd src/antenna_simulator && ./slave"
 
-    - name: Run Acceptance Tests
-      run: python3 src/astt_gui/app.py 10.8.66.138
+    - name: Run ASTT software
+      run: gunicorn --bind 10.8.66.138:5000 app:app
+
 
 
     
