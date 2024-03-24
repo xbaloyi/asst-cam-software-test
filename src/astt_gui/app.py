@@ -202,5 +202,5 @@ if __name__ == "__main__":
         
         ip_address = '127.0.0.1'
 
-    socketio.run(app, host=ip_address, port=5000)
+    socketio.run(app, host=10.8.66.138, port=5000)
     #socketio.run(app)
