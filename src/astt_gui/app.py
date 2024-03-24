@@ -5,6 +5,7 @@ from threading import Lock
 
 from flask import Flask, jsonify, render_template, request
 from flask_socketio import SocketIO
+import sys
 
 from component_managers.astt_comp_manager import ASTTComponentManager
 from component_managers.start_simulator import SimulatorManager
@@ -193,4 +194,13 @@ def disconnect():
 
 if __name__ == "__main__":
     print("App started")
-    socketio.run(app)
+    
+    if len(sys.argv) > 1:
+        
+        ip_address = sys.argv[1]
+    else:
+        
+        ip_address = '127.0.0.1'
+
+    socketio.run(app, host=ip_address, port=5000)
+    #socketio.run(app)
