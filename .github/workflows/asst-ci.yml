@@ -153,8 +153,8 @@ jobs:
 
     - name: Create directory
       run: |
-       mkdir ~/myproject
-       cd ~/myproject
+       mkdir myproject
+       cd myproject/
        python3 -m venv myprojectenv
        source myprojectenv/bin/activate
        
@@ -187,7 +187,9 @@ jobs:
       run: docker run -d --network=host ghcr.io/xbaloyi/astt-cam-software-test bash -c "cd src/antenna_simulator && ./slave"
 
     - name: Run ASTT software
-      run: gunicorn --bind 10.8.66.138:5000 app:app
+      run: |
+       cd ASTT_softwareWork/asst-cam-software-test/asst-cam-software-test/src/astt_gui/
+       gunicorn --bind 10.8.66.138:5000 app:app
 
 
 
