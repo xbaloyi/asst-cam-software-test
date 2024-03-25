@@ -190,7 +190,7 @@ jobs:
     - name: Run ASTT software
       run: |
        cd src/astt_gui
-       ssh ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} 'nohup gunicorn --bind ${{ secrets.SERVER_IP }}:5000 app:app &'
+       gunicorn --bind ${{ secrets.SERVER_IP }}:5000 app:app &
 
 
 
