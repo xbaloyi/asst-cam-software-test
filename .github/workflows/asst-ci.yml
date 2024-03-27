@@ -190,7 +190,7 @@ jobs:
     - name: Run ASTT software
       run: |
        cd src/astt_gui
-       gunicorn --bind 10.8.66.138:5000 app:app --daemon
+       gunicorn --bind 0.0.0.0:5000 app:app --daemon
 
 
 
