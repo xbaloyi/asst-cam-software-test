@@ -157,7 +157,7 @@ jobs:
          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
          ssh-keyscan -H ${{ secrets.SERVER_IP }} > ~/.ssh/known_hosts
     - name: connect and pull
-      run: ssh ${{ secrets.SERVER_USERNAME }}@{{ secrets.SERVER_IP }} " echo hello"
+      run: ssh asst@10.8.66.138 " echo hello"
     - name: cleanup
       run: rm -rf ~/.ssh
 
