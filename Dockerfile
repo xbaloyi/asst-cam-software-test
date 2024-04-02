@@ -35,6 +35,21 @@ RUN /app/installLely.sh
 
 # Compile slave
 RUN chmod +x /app/src/antenna_simulator/compileSlave.sh
-RUN /app/src/antenna_simulator/compileSlave.sh 
+RUN /app/src/antenna_simulator/compileSlave.sh
+
+# Copy the dependencies file to the working directory
+COPY requirements.txt .
+
+# Install dependencies
+RUN pip install -r requirements.txt
+
+# Copy the content of the local src directory to the working directory
+COPY . .
+
+# Expose port 5000
+EXPOSE 5000
+
+# Command to run the Flask application
+CMD ["flask", "run"]
 
 
