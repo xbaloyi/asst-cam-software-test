@@ -37,19 +37,13 @@ RUN /app/installLely.sh
 RUN chmod +x /app/src/antenna_simulator/compileSlave.sh
 RUN /app/src/antenna_simulator/compileSlave.sh
 
-# Copy the dependencies file to the working directory
-COPY requirements.txt .
-
-# Install dependencies
-RUN pip install -r requirements.txt
-
-# Copy the content of the local src directory to the working directory
-COPY . .
-
-# Expose port 5000
+# Make port 5000 available to the world outside this container
 EXPOSE 5000
 
-# Command to run the Flask application
-CMD ["flask", "run"]
+# Define environment variable
+ENV FLASK_APP=src/path/app.py
+
+# Run app.py when the container launches
+CMD ["flask", "run", "--host=0.0.0.0"]
 
 
