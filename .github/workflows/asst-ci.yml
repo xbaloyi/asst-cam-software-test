@@ -147,19 +147,30 @@ jobs:
       run: echo "Will publish the asst software."
 
   deploy:
-    runs-on: self-hosted
     needs: publish
+    runs-on: self-hosted
+    container:
+      image: ubuntu:22.04
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Change to deployment directory
+        run: cd deployment
+        
+      - name: Pull Docker image
+        run: docker pull your_image_name
+        
+      - name: Remove old containers
+        run: docker container prune -f
+        
+      - name: Remove old images
+        run: docker image prune -af
+        
+      - name: Start Docker containers
+        run: docker-compose up -d
 
-    steps: 
-    - name: install ssh keys
-      run: |
-         install -m 600 -D /dev/null ~/.ssh/id_rsa
-         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-         ssh-keyscan -H ${{ secrets.SERVER_IP }} > ~/.ssh/known_hosts
-    - name: connect and pull
-      run: ssh asst@10.8.66.138 "cd ${{ secrets.WORK_DIR }} && docker compose up -d && exit"
-    - name: cleanup
-      run: rm -rf ~/.ssh
 
 
     
