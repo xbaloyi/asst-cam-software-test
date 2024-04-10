@@ -193,5 +193,4 @@ def disconnect():
 
 if __name__ == "__main__":
     print("App started")
-    socketio.run(app, host="10.8.66.138", port="5000")
-    #socketio.run(app)
+    socketio.run(app)
