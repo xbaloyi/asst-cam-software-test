@@ -149,30 +149,25 @@ jobs:
   deploy:
     needs: acceptance-test
     runs-on: self-hosted
-    container:
-      image: ubuntu:22.04
-      
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+  
       - name: Change to deployment directory
         run: cd deployment
-        
+  
       - name: Pull Docker image
-        run: docker pull ghcr.io/xbaloyi/astt-cam-software-test
-        
+        run: |
+          docker pull ghcr.io/xbaloyi/astt-cam-software-test
+  
       - name: Remove old containers
-        run: docker container prune -f
-        
+        run: |
+          docker container prune --force
+  
       - name: Remove old images
-        run: docker image prune -af
-        
+        run: |
+          docker image prune --all --force
+  
       - name: Start Docker containers
-        run: docker-compose up -d
-
-
-
-    
-    
-      
+        run: |
+          docker-compose up --detach
