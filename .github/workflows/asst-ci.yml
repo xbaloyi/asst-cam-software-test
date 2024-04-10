@@ -147,7 +147,7 @@ jobs:
       run: echo "Will publish the asst software."
 
   deploy:
-    needs: publish
+    needs: acceptance-test
     runs-on: self-hosted
     container:
       image: ubuntu:22.04
