@@ -147,27 +147,25 @@ jobs:
       run: echo "Will publish the asst software."
 
   deploy:
-    needs: acceptance-test
+    needs: publish
     runs-on: self-hosted
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
   
+      - name: Pull Docker image
+        run: docker pull ghcr.io/xbaloyi/astt-cam-software-test
+  
       - name: Change to deployment directory
         run: cd deployment
   
-      - name: Pull Docker image
-        run: |
-          docker pull ghcr.io/xbaloyi/astt-cam-software-test
+      - name: Stop previous Docker containers
+        run: docker-compose down
   
-      - name: Remove old containers
-        run: |
-          docker container prune --force
-  
-      - name: Remove old images
-        run: |
-          docker image prune --all --force
+      - name: Remove old Docker images
+        run: docker image prune -af
   
       - name: Start Docker containers
-        run: |
-          docker-compose up --detach
+        run: docker-compose up -d
+
