@@ -160,7 +160,7 @@ jobs:
         run: cd deployment
         
       - name: Pull Docker image
-        run: docker pull your_image_name
+        run: docker pull ghcr.io/xbaloyi/astt-cam-software-test
         
       - name: Remove old containers
         run: docker container prune -f
