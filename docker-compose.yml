@@ -3,6 +3,5 @@ services:
   web:
     build:
       context: .
-      dockerfile: deployment/Dockerfile
     ports:
       - "5000:5000"
