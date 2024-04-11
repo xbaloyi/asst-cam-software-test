@@ -1,6 +1,7 @@
 bidict
 cachelib
 click
+canopen
 Flask
 Flask-Login
 Flask-Session
