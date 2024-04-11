@@ -37,19 +37,21 @@ RUN chmod +x /app/src/antenna_simulator/compileSlave.sh
 RUN /app/src/antenna_simulator/compileSlave.sh 
 # Define the command to run the application
 
-# Copying the source code and requirements file into the container
-COPY requirements.txt .
+# Set working directory
+WORKDIR /app/src/astt_gui
+
+# Copy the source code and requirements file
+COPY src/ /app/src/
+COPY requirements.txt /app/src/
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r /app/src/requirements.txt
 
-# Copy the app code into the container
-COPY src/ /app
-
-RUN echo 'export PYTHONPATH="/app/src/astt_gui:/app/src/component_managers:/app/src/antenna_simulator:$PYTHONPATH"' >> /root/.bashrc
+# Set the PYTHONPATH environment variable
+ENV PYTHONPATH="/app/src/astt_gui:/app/src/component_managers:/app/src/antenna_simulator:$PYTHONPATH"
 
 # Expose port 5000
 EXPOSE 5000
 
-# Run the Flask app with Flask-SocketIO on a specific IP address and port
+# Run the Flask app
 CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
