@@ -169,13 +169,13 @@ jobs:
         run: cd deployment
   
       - name: Stop previous Docker containers
-        run: docker-compose down
+        run: docker compose down
   
       - name: Remove old Docker images
         run: docker image prune -af
   
       - name: Start Docker containers
-        run: docker-compose up -d
+        run: docker compose up -d
   
       - name: Cleanup SSH keys
         run: rm -rf ~/.ssh
