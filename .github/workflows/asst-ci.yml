@@ -149,10 +149,18 @@ jobs:
   deploy:
     needs: publish
     runs-on: self-hosted
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+  
+      - name: Install SSH keys and connect
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          ssh -i ~/.ssh/id_rsa asst@${{ secrets.SERVER_IP }} "echo 'SSH connection successful'"
   
       - name: Pull Docker image
         run: docker pull ghcr.io/xbaloyi/astt-cam-software-test
@@ -168,4 +176,7 @@ jobs:
   
       - name: Start Docker containers
         run: docker-compose up -d
+  
+      - name: Cleanup SSH keys
+        run: rm -rf ~/.ssh
 
