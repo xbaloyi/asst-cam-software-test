@@ -38,10 +38,16 @@ RUN /app/src/antenna_simulator/compileSlave.sh
 # Define the command to run the application
 
 # Copying the source code and requirements file into the container
-COPY requirements.txt /app
-COPY src/astt_gui/ /app
+COPY requirements.txt .
 
-# Installing Python dependencies
-RUN pip3 install --no-cache-dir -r requirements.txt 
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python3", "app.py"]
+# Copy the app code into the container
+COPY src/ /app
+
+# Expose port 5000
+EXPOSE 5000
+
+# Run the Flask app with Flask-SocketIO on a specific IP address and port
+CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
