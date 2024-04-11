@@ -18,14 +18,9 @@ RUN apt install python3 python3-pip iproute2 can-utils pkg-config python3-dcf-to
 # Setting the working directory
 WORKDIR /app
 
-# Copying the source code and requirements file into the container
-COPY requirements.txt /app
-COPY src/astt_gui/ /app
+COPY . /app
 
-# Installing Python dependencies
-RUN pip3 install --no-cache-dir -r requirements.txt 
-
-RUN RUN pip3 install --no-cache-dir poetry==1.7.1
+RUN pip3 install poetry==1.7.1
 
 RUN poetry config virtualenvs.create false && poetry install
 
@@ -41,5 +36,12 @@ RUN /app/installLely.sh
 RUN chmod +x /app/src/antenna_simulator/compileSlave.sh
 RUN /app/src/antenna_simulator/compileSlave.sh 
 # Define the command to run the application
+
+# Copying the source code and requirements file into the container
+COPY requirements.txt /app
+COPY src/astt_gui/ /app
+
+# Installing Python dependencies
+RUN pip3 install --no-cache-dir -r requirements.txt 
 
 CMD ["python3", "app.py"]
