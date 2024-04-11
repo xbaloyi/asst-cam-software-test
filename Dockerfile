@@ -19,7 +19,11 @@ RUN apt install python3 python3-pip iproute2 can-utils pkg-config python3-dcf-to
 WORKDIR /app
 
 # Copying asst code into the container
-COPY . /app
+COPY src/astt_gui/ /app
+
+COPY requirements.txt
+
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Installing Python dependencies
 RUN pip3 install poetry==1.7.1
@@ -37,13 +41,4 @@ RUN /app/installLely.sh
 RUN chmod +x /app/src/antenna_simulator/compileSlave.sh
 RUN /app/src/antenna_simulator/compileSlave.sh
 
-# Make port 5000 available to the world outside this container
-EXPOSE 5000
-
-# Define environment variable
-ENV FLASK_APP=src/path/app.py
-
-# Run app.py when the container launches
-CMD ["flask", "run", "--host=0.0.0.0"]
-
-
+CMD ["python3", "app.py"]
