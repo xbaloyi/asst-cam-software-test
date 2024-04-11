@@ -15,10 +15,11 @@ RUN add-apt-repository ppa:lely/ppa -y
 #RUN apt install python3.10 python3-pip iproute2 can-utils pkg-config python3-dcf-tools -y 
 RUN apt install python3 python3-pip iproute2 can-utils pkg-config python3-dcf-tools -y 
 
-# Setting the working directory
-WORKDIR /app
+# Set working directory
+WORKDIR /app/src/astt_gui
 
-COPY . /app
+# Copy the source code and requirements file
+COPY src/ /app/src/
 
 RUN pip3 install poetry==1.7.1
 
@@ -37,11 +38,6 @@ RUN chmod +x /app/src/antenna_simulator/compileSlave.sh
 RUN /app/src/antenna_simulator/compileSlave.sh 
 # Define the command to run the application
 
-# Set working directory
-WORKDIR /app/src/astt_gui
-
-# Copy the source code and requirements file
-COPY src/ /app/src/
 COPY requirements.txt /app/src/
 
 # Install Python dependencies
