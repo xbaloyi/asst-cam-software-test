@@ -15,11 +15,11 @@ RUN add-apt-repository ppa:lely/ppa -y
 #RUN apt install python3.10 python3-pip iproute2 can-utils pkg-config python3-dcf-tools -y 
 RUN apt install python3 python3-pip iproute2 can-utils pkg-config python3-dcf-tools -y 
 
-# Set working directory
-WORKDIR /app/src/astt_gui
+# Setting the working directory
+WORKDIR /app
 
-# Copy the source code and requirements file
-COPY src/ /app/src/
+# Copying asst code into the container
+COPY . /app
 
 RUN pip3 install poetry==1.7.1
 
@@ -36,8 +36,9 @@ RUN /app/installLely.sh
 # Compile slave
 RUN chmod +x /app/src/antenna_simulator/compileSlave.sh
 RUN /app/src/antenna_simulator/compileSlave.sh 
-# Define the command to run the application
 
+# Define the command to run the application
+COPY src/ /app/src/
 COPY requirements.txt /app/src/
 
 # Install Python dependencies
@@ -45,6 +46,15 @@ RUN pip install --no-cache-dir -r /app/src/requirements.txt
 
 # Set the PYTHONPATH environment variable
 ENV PYTHONPATH="/app/src/astt_gui:/app/src/component_managers:/app/src/antenna_simulator:$PYTHONPATH"
+
+RUN chmod +x /app/src/component_managers/start_simulator.py
+RUN /app/src/component_managers/start_simulator.py
+
+RUN chmod +x /app/src/component_managers/sources.py
+RUN /app/src/component_managers/sources.py
+
+RUN chmod +x /app/src/component_managers/astt_comp_manager.py
+RUN /app/src/component_managers/astt_comp_manager.py
 
 # Expose port 5000
 EXPOSE 5000
