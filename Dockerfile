@@ -25,7 +25,8 @@ COPY src/astt_gui/ /app
 # Installing Python dependencies
 RUN pip3 install --no-cache-dir -r requirements.txt 
 
-RUN pip3 install poetry==1.7.1
+RUN RUN pip3 install --no-cache-dir poetry==1.7.1
+
 RUN poetry config virtualenvs.create false && poetry install
 
 # Dependencies to build lely
