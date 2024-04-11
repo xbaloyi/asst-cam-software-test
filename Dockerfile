@@ -47,12 +47,6 @@ RUN pip install --no-cache-dir -r /app/src/requirements.txt
 # Set the PYTHONPATH environment variable
 ENV PYTHONPATH="/app/src/astt_gui:/app/src/component_managers:/app/src/antenna_simulator:$PYTHONPATH"
 
-RUN chmod +x /app/src/component_managers/start_simulator.py
-RUN /app/src/component_managers/start_simulator.py
-
-RUN chmod +x /app/src/component_managers/sources.py
-RUN /app/src/component_managers/sources.py
-
 RUN chmod +x /app/src/component_managers/astt_comp_manager.py
 RUN /app/src/component_managers/astt_comp_manager.py
 
