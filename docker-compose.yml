@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
     # Use the image from the Docker registry
-    image: ghcr.io/xbaloyi/astt-cam-software-test
+    image: ghcr.io/xbaloyi/astt-cam-software-test:latest
     ports:
       - "5000:5000"
     environment:
