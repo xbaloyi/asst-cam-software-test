@@ -46,6 +46,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the app code into the container
 COPY src/ /app
 
+RUN echo 'export PYTHONPATH="/app/src/astt_gui:/app/src/component_managers:/app/src/antenna_simulator:$PYTHONPATH"' >> /root/.bashrc
+
 # Expose port 5000
 EXPOSE 5000
 
