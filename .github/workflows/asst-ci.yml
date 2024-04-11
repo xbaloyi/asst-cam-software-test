@@ -166,7 +166,7 @@ jobs:
         run: docker pull ghcr.io/xbaloyi/astt-cam-software-test
   
       - name: Change to deployment directory
-        run: cd deployment
+        run: pwd
   
       - name: Stop previous Docker containers
         run: docker compose down
