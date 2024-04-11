@@ -161,18 +161,18 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
           ssh -i ~/.ssh/id_rsa asst@${{ secrets.SERVER_IP }} "echo 'SSH connection successful'"
+          
+      - name: Stop previous Docker containers
+        run: docker compose down
+  
+      - name: Remove old Docker images
+        run: docker image prune -af
   
       - name: Pull Docker image
         run: docker pull ghcr.io/xbaloyi/astt-cam-software-test
   
       - name: Change to deployment directory
         run: pwd
-  
-      - name: Stop previous Docker containers
-        run: docker compose down
-  
-      - name: Remove old Docker images
-        run: docker image prune -af
   
       - name: Start Docker containers
         run: docker compose up -d
