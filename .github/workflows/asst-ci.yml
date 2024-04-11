@@ -169,7 +169,7 @@ jobs:
         run: docker image prune -af
   
       - name: Pull Docker image
-        run: docker pull ghcr.io/xbaloyi/astt-cam-software-test
+        run: docker pull ghcr.io/xbaloyi/astt-cam-software-test:latest
   
       - name: Change to deployment directory
         run: pwd
