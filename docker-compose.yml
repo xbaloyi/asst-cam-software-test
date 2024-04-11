@@ -7,4 +7,5 @@ services:
       - "5000:5000"
     environment:
       FLASK_APP: /app/src/astt_gui/app.py
+      PYTHONPATH: /app/src/astt_gui:/app/src/antenna_simulator:/app/src/component_managers
     command: flask run --host=0.0.0.0 --port=5000
