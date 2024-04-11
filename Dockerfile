@@ -19,8 +19,8 @@ RUN apt install python3 python3-pip iproute2 can-utils pkg-config python3-dcf-to
 WORKDIR /app
 
 # Copying the source code and requirements file into the container
-COPY src/astt_gui/ /app
 COPY requirements.txt /app
+COPY src/astt_gui/ /app
 
 # Installing Python dependencies
 RUN pip3 install --no-cache-dir -r requirements.txt 
