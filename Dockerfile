@@ -10,7 +10,7 @@ RUN apt update -y && apt install -y software-properties-common sudo
 RUN useradd --create-home --shell /bin/bash astt
 
 # Add the non-root user to the sudo group
-RUN usermod -aG sudo astt
+RUN usermod -aG sudo asst
 
 # Set a password for the non-root user
 # Note: Replace 'password' with a strong password for the user
