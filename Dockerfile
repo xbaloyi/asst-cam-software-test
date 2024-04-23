@@ -14,11 +14,11 @@ RUN usermod -aG sudo astt
 
 # Set a password for the non-root user
 # Note: Replace 'password' with a strong password for the user
-RUN echo "astt:cam@testing" | chpasswd
+RUN echo "asst:asst@cam" | chpasswd
 
 # Configure sudoers to allow user to use sudo without a password
 # Remove the 'NOPASSWD:' option if you want the user to use a password with sudo
-RUN echo "astt ALL=(ALL)" >> /etc/sudoers
+RUN echo "asst ALL=(ALL)" >> /etc/sudoers
 
 # Apt update
 RUN apt update -y
@@ -35,7 +35,7 @@ RUN apt install python3 python3-pip iproute2 can-utils pkg-config python3-dcf-to
 WORKDIR /app
 
 # Change ownership of the /app directory to the non-root user
-RUN chown -R astt:astt /app
+RUN chown -R asst:asst /app
 
 # Copying asst code into the container
 COPY . /app
@@ -70,7 +70,7 @@ ENV PYTHONPATH="/app/src/astt_gui:/app/src/component_managers:/app/src/antenna_s
 EXPOSE 5000
 
 # Switch to the non-root user
-USER astt
+USER asst
 
 # Run the Flask app
 CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
