@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update -y && apt install -y software-properties-common sudo
 
 # Create a non-root user and set its home directory
-RUN useradd --create-home --shell /bin/bash astt
+RUN useradd --create-home --shell /bin/bash asst
 
 # Add the non-root user to the sudo group
 RUN usermod -aG sudo asst
