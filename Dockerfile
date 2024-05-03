@@ -13,11 +13,9 @@ RUN useradd --create-home --shell /bin/bash asst
 RUN usermod -aG sudo asst
 
 # Set a password for the non-root user
-# Note: Replace 'password' with a strong password for the user
 RUN echo "asst:asst@cam" | chpasswd
 
 # Configure sudoers to allow user to use sudo without a password
-# Remove the 'NOPASSWD:' option if you want the user to use a password with sudo
 RUN echo "asst ALL=(ALL)" >> /etc/sudoers
 
 # Apt update
@@ -34,7 +32,7 @@ RUN apt install python3 python3-pip iproute2 can-utils pkg-config python3-dcf-to
 # Setting the working directory
 WORKDIR /app
 
-# Change ownership of the /app directory to the non-root user
+# Changing ownership of the /app directory to the non-root user
 RUN chown -R asst:asst /app
 
 # Copying asst code into the container
