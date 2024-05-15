@@ -174,7 +174,7 @@ jobs:
       - name: Change to deployment directory
         run: |
          pwd
-         export APP_PASSWORD="asst@cam"
+         export ASTT_PASSWORD="asst@cam"
   
       - name: Start Docker containers
         run: docker compose up -d
