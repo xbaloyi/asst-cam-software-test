@@ -82,18 +82,18 @@ def index():
 def start_astt_gui():
     # # Trigger condition when Initialize button is clicked.
 
-    # if (
-    #     "button" in request.form
-    #     and request.form["button"] == "Initialize"
-    # ):
-    #     user_pass = request.form["password"]
+     if (
+         "button" in request.form
+         and request.form["button"] == "Initialize"
+     ):
+         user_pass = os.environ.get('ASTT_PASSWORD')
 
     # Trigger condition when Initialize button is clicked.
-    if "button" in request.form and request.form["button"] == "Initialize":
-        # Retrieve password from environment variable
-        user_pass = os.environ.get("ASTT_PASSWORD")
-        if not user_pass:
-            return jsonify("Password not set in environment variable"), 400
+    # if "button" in request.form and request.form["button"] == "Initialize":
+    #     # Retrieve password from environment variable
+    #     user_pass = os.environ.get("ASTT_PASSWORD")
+    #     if not user_pass:
+    #         return jsonify("Password not set in environment variable"), 400
 
         cm.clear_all_logs()
         # Start VCAN network & simulator
