@@ -172,7 +172,9 @@ jobs:
         run: docker pull ghcr.io/xbaloyi/astt-cam-software-test:latest
   
       - name: Change to deployment directory
-        run: pwd
+        run: |
+         pwd
+         export APP_PASSWORD="yasst@cam"
   
       - name: Start Docker containers
         run: docker compose up -d
