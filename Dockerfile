@@ -61,6 +61,8 @@ COPY src/ /app/src/component_managers/
 # Install Python dependencies
 RUN pip install --no-cache-dir -r /app/src/requirements.txt
 
+ENV ASTT_PASSWORD="asst@cam"
+
 # Set the PYTHONPATH environment variable
 ENV PYTHONPATH="/app/src/astt_gui:/app/src/component_managers:/app/src/antenna_simulator:$PYTHONPATH"
 
