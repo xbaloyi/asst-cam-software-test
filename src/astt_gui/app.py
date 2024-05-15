@@ -87,7 +87,7 @@ def start_astt_gui():
         and request.form["button"] == "Initialize"
     ):
         user_pass = os.environ.get('ASTT_PASSWORD')
-        logger.info("Passing user password", user_pass)
+        
 
     # Trigger condition when Initialize button is clicked.
     # if "button" in request.form and request.form["button"] == "Initialize":
@@ -102,6 +102,7 @@ def start_astt_gui():
         simulator_manager = SimulatorManager()
         logger.info("Starting vcan interface")
         logger.info("Passing user password")
+        print("THE PASSWORD IS ", user_pass)
         success = simulator_manager.start_can_interface(user_pass)
 
         # Report incorrect password to user.
