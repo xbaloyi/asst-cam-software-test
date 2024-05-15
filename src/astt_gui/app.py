@@ -1,5 +1,6 @@
 import logging
 import time
+import os
 from datetime import datetime
 from threading import Lock
 
@@ -79,13 +80,21 @@ def index():
 
 @app.route("/", methods=["POST"])
 def start_astt_gui():
-    # Trigger condition when Initialize button is clicked.
+    # # Trigger condition when Initialize button is clicked.
 
-    if (
-        "button" in request.form
-        and request.form["button"] == "Initialize"
-    ):
-        user_pass = request.form["password"]
+    # if (
+    #     "button" in request.form
+    #     and request.form["button"] == "Initialize"
+    # ):
+    #     user_pass = request.form["password"]
+
+    # Trigger condition when Initialize button is clicked.
+    if "button" in request.form and request.form["button"] == "Initialize":
+        # Retrieve password from environment variable
+        user_pass = os.environ.get("ASTT_PASSWORD")
+        if not user_pass:
+            return jsonify("Password not set in environment variable"), 400
+
         cm.clear_all_logs()
         # Start VCAN network & simulator
         logger.info("Intitialized button triggered")
