@@ -24,4 +24,4 @@ jobs:
        cd svn/
        git clone https://github.com/xbaloyi/asst-cam-software-test.git
        docker build -t astt-cam-software .
-       python3 src/astt_gui/app.py --h 10.8.66.138 
+       python3 src/astt_gui/app.py --h 
