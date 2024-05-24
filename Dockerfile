@@ -3,11 +3,11 @@ FROM ubuntu:20.04
 
 # Setting environment variables
 ENV DEBIAN_FRONTEND=noninteractive
-# Install sudo and other necessary packages
-RUN apt update -y && apt install -y software-properties-common sudo
+# Install sudo 
+RUN apt-get update && apt-get install -y sudo
 
 # Create a non-root user and set its home directory
-RUN useradd --create-home --shell /bin/bash asst
+RUN useradd -m -s /bin/bash asst
 
 # Add the non-root user to the sudo group
 RUN usermod -aG sudo asst
@@ -15,8 +15,7 @@ RUN usermod -aG sudo asst
 # Set a password for the non-root user
 RUN echo "asst:asst@cam" | chpasswd
 
-# Configure sudoers to allow user to use sudo without a password
-RUN echo "asst ALL=(ALL)" >> /etc/sudoers
+RUN echo "asst ALL=(ALL) ALL" >> /etc/sudoers
 
 # Apt update
 RUN apt update -y
