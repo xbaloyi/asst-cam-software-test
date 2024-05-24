@@ -15,7 +15,7 @@ RUN usermod -aG sudo asst
 # Set a password for the non-root user
 RUN echo "asst:asst@cam" | chpasswd
 
-RUN echo "asst ALL=(ALL) ALL" >> /etc/sudoers
+RUN echo "asst ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Apt update
 RUN apt update -y
