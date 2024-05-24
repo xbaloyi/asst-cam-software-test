@@ -2,10 +2,17 @@ version: '3'
 services:
   web:
     image: ghcr.io/xbaloyi/astt-cam-software-test:latest
+    container_name: ASTTSoftware_GUI
     ports:
       - "5000:5000"
+    networks: 
+      - astt_network
     environment:
       ASTT_PASSWORD: "asst@cam"
       FLASK_APP: /app/src/astt_gui/app.py
       PYTHONPATH: /app/src/astt_gui:/app/src/antenna_simulator:/app/src/component_managers
     command: flask run --host=0.0.0.0 --port=5000
+    
+networks:
+   astt_network:
+    driver: bridge
