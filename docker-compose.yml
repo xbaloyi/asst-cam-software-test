@@ -15,4 +15,4 @@ services:
     
 networks:
    astt_network:
-    driver: local
+    driver: bridge
