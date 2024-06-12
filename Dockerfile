@@ -37,7 +37,6 @@ RUN chown -R dockerastt:dockerastt /app
 COPY . /app
 
 RUN pip3 install poetry==1.7.1
-
 RUN poetry config virtualenvs.create false && poetry install
 
 # Dependencies to build lely
@@ -59,7 +58,7 @@ COPY src/ /app/src/component_managers/
 # Install Python dependencies
 RUN pip install --no-cache-dir -r /app/src/requirements.txt
 
-ENV ASTT_PASSWORD="TestingPassword"
+ENV ASTT_PASSWORD="TestingDocker"
 
 # Set the PYTHONPATH environment variable
 ENV PYTHONPATH="/app/src/astt_gui:/app/src/component_managers:/app/src/antenna_simulator:$PYTHONPATH"
