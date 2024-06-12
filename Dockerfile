@@ -31,7 +31,7 @@ RUN apt install python3 python3-pip iproute2 can-utils pkg-config python3-dcf-to
 WORKDIR /app
 
 # Changing ownership of the /app directory to the non-root user
-RUN chown -R asst:asst /app
+RUN chown -R dockerastt:dockerastt /app
 
 # Copying asst code into the container
 COPY . /app
