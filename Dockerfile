@@ -7,12 +7,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y sudo
 
 # Create a non-root user and set its home directory
-RUN useradd -m -s /bin/bash asst
+RUN useradd -m -s /bin/bash dockerastt
 
 # Add the non-root user to the sudo group
-RUN usermod -aG sudo asst
+RUN usermod -aG sudo dockerastt
 
-RUN echo "asst ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+RUN echo "dockerastt:TestingDocker" | chpasswd
+
+RUN echo "dockerastt ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 # Apt update
 RUN apt update -y
@@ -66,7 +68,7 @@ ENV PYTHONPATH="/app/src/astt_gui:/app/src/component_managers:/app/src/antenna_s
 EXPOSE 5000
 
 # Switch to the non-root user
-USER asst
+USER  dockerastt
 
 # Run the Flask app
 CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
