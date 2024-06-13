@@ -7,14 +7,15 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y sudo
 
 # Create a non-root user and set its home directory
-RUN useradd -m -s /bin/bash dockerastt
+#RUN useradd -m -s /bin/bash dockerastt
+RUN useradd --create-home --shell /bin/bash dockerastt
 
 # Add the non-root user to the sudo group
 RUN usermod -aG sudo dockerastt
 
 RUN echo "dockerastt:TestingDocker" | chpasswd
 
-RUN echo "dockerastt ALL=(ALL:ALL) ALL" >> /etc/sudoers
+RUN echo "dockerastt ALL=(ALL) ALL" >> /etc/sudoers
 
 # Apt update
 RUN apt update -y
