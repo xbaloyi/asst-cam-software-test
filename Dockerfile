@@ -17,8 +17,6 @@ RUN echo "dockerastt:TestingDocker" | chpasswd
 
 RUN echo "dockerastt ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-USER dockerastt 
-
 # Apt update
 RUN apt update -y
 RUN apt install software-properties-common -y
@@ -70,7 +68,7 @@ ENV PYTHONPATH="/app/src/astt_gui:/app/src/component_managers:/app/src/antenna_s
 EXPOSE 5000
 
 # Switch to the non-root user
-#USER  dockerastt
+USER  dockerastt
 
 # Run the Flask app
 CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
