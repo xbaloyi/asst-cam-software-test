@@ -4,7 +4,7 @@ FROM ubuntu:20.04
 # Setting environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 # Install sudo 
-RUN apt-get update && apt-get install -y sudo
+RUN apt-get update && apt-get install -y sudo software-properties-common
 
 # Create a non-root user and set its home directory
 #RUN useradd -m -s /bin/bash dockerastt
@@ -18,24 +18,26 @@ RUN echo "dockerastt:TestingDocker" | chpasswd
 RUN echo "dockerastt ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Apt update
-RUN apt update -y
-RUN apt install software-properties-common -y
+RUN sudo apt update -y
+RUN sudo apt install software-properties-common -y
 
 # Getting Lely canopen 
-RUN add-apt-repository ppa:lely/ppa -y
+RUN sudo add-apt-repository ppa:lely/ppa -y
 
 #installing Python 3.10 and other dependencies
 #RUN apt install python3.10 python3-pip iproute2 can-utils pkg-config python3-dcf-tools -y 
-RUN apt install python3 python3-pip iproute2 can-utils pkg-config python3-dcf-tools -y 
+RUN sudo apt install python3 python3-pip iproute2 can-utils pkg-config python3-dcf-tools -y 
 
 # Setting the working directory
 WORKDIR /app
 
 # Changing ownership of the /app directory to the non-root user
-RUN chown -R dockerastt:dockerastt /app
+
 
 # Copying asst code into the container
 COPY . /app
+
+RUN chown -R dockerastt:dockerastt /app
 
 RUN pip3 install poetry==1.7.1
 RUN poetry config virtualenvs.create false && poetry install
