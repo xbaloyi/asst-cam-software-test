@@ -27,10 +27,10 @@ USER dockerastt
 # Setting the working directory
 WORKDIR /app
 
+
+RUN chown -R dockerastt:dockerastt /app
 # Copying asst code into the container
 COPY . /app
-
-RUN sudo chown -R dockerastt:dockerastt /app
 
 # Installing Python dependencies
 RUN pip3 install poetry==1.7.1
