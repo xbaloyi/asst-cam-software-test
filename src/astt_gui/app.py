@@ -86,7 +86,7 @@ def start_astt_gui():
         "button" in request.form
         and request.form["button"] == "Initialize"
     ):
-        user_pass = os.environ.get('ASTT_PASSWORD')
+        user_pass = os.environ.get('password')
         
 
     # Trigger condition when Initialize button is clicked.
