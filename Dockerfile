@@ -52,8 +52,6 @@ COPY requirements.txt /app/src/
 # Install Python dependencies from requirements.txt
 RUN pip install --no-cache-dir -r /app/src/requirements.txt
 
-# Set environment variables
-ENV password="testingDocker"
 ENV PYTHONPATH="/app/src/astt_gui:/app/src/component_managers:/app/src/antenna_simulator:$PYTHONPATH"
 
 
