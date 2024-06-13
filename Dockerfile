@@ -48,12 +48,13 @@ RUN /app/src/antenna_simulator/compileSlave.sh
 # Copying necessary files for the application
 COPY src/ /app/src/
 COPY requirements.txt /app/src/
+COPY src/ /app/src/component_managers/
 
 # Install Python dependencies from requirements.txt
 RUN pip install --no-cache-dir -r /app/src/requirements.txt
 
+ENV password="testingDocker"
 ENV PYTHONPATH="/app/src/astt_gui:/app/src/component_managers:/app/src/antenna_simulator:$PYTHONPATH"
-
 
 # Expose port 5000
 EXPOSE 5000
