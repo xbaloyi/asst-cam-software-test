@@ -22,11 +22,8 @@ RUN add-apt-repository ppa:lely/ppa -y
 #RUN apt install python3.10 python3-pip iproute2 can-utils pkg-config python3-dcf-tools -y 
 RUN apt install python3 python3-pip iproute2 can-utils pkg-config python3-dcf-tools -y 
 
-USER dockerastt
-
 # Setting the working directory
 WORKDIR /app
-
 
 RUN chown -R dockerastt:dockerastt /app
 # Copying asst code into the container
@@ -62,6 +59,8 @@ ENV PYTHONPATH="/app/src/astt_gui:/app/src/component_managers:/app/src/antenna_s
 
 # Expose port 5000
 EXPOSE 5000
+
+USER dockerastt
 
 # Define the command to run the application
 CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
