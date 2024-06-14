@@ -78,8 +78,11 @@ def index():
     return render_template("index.html")
 
 
+
 @app.route("/", methods=["POST"])
 def start_astt_gui():
+    global thread, thread2, thread3  # Declare all global variables at once
+
     # Check the content type of the request
     if request.content_type == 'application/json':
         data = request.get_json()
@@ -107,7 +110,6 @@ def start_astt_gui():
                 cm.subscribe_to_antenna_mode()
                 cm.subscribe_to_stow_sensor()
                 cm.trigger_transmission()
-                global thread3
                 with thread_lock:
                     if thread3 is None:
                         thread3 = socketio.start_background_task(
@@ -127,7 +129,6 @@ def start_astt_gui():
                 )
             except (Exception, ValueError) as err:
                 logger.error(f"Error encountered: {err}")
-            global thread
             with thread_lock:
                 if thread is None:
                     thread = socketio.start_background_task(
@@ -135,7 +136,6 @@ def start_astt_gui():
                     )
         elif "sources" in data and data["sources"] == "sun":
             logger.info("Tracking button triggered")
-            global thread2
             with thread_lock:
                 if thread2 is None:
                     thread2 = socketio.start_background_task(
@@ -177,7 +177,6 @@ def start_astt_gui():
                 cm.subscribe_to_antenna_mode()
                 cm.subscribe_to_stow_sensor()
                 cm.trigger_transmission()
-                global thread3
                 with thread_lock:
                     if thread3 is None:
                         thread3 = socketio.start_background_task(
@@ -197,7 +196,6 @@ def start_astt_gui():
                 )
             except (Exception, ValueError) as err:
                 logger.error(f"Error encountered: {err}")
-            global thread
             with thread_lock:
                 if thread is None:
                     thread = socketio.start_background_task(
@@ -205,7 +203,6 @@ def start_astt_gui():
                     )
         elif "sources" in request.form and request.form["sources"] == "sun":
             logger.info("Tracking button triggered")
-            global thread2
             with thread_lock:
                 if thread2 is None:
                     thread2 = socketio.start_background_task(
