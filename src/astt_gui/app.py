@@ -79,149 +79,97 @@ def index():
 
 
 
+
 @app.route("/", methods=["POST"])
 def start_astt_gui():
-    global thread, thread2, thread3  # Declare all global variables at once
-    app.logger.debug(f"Request Content-Type: {request.content_type}")
-    app.logger.debug(f"Request Data: {request.data}")
-    if request.content_type == 'application/json':
-        data = request.get_json()
-        if "button" in data and data["button"] == "Initialize":
-            user_pass = data.get("password")
-            cm.clear_all_logs()
-            logger.info("Initialized button triggered")
-            simulator_manager = SimulatorManager()
-            logger.info("Starting vcan interface")
-            logger.info("Passing user password")
-            print(f"Received password: {user_pass}")
-            app.logger.debug(f"Received password: {user_pass}")
-            success = simulator_manager.start_can_interface(user_pass)
-            
-            if success == 0:
-                logger.info("Correct password")
-                simulator_manager.run_container_and_startup_simulator()
-                time.sleep(2)
-                cm.connect_to_network()
-                cm.connect_to_plc_node()
-                cm.subscribe_to_az_change()
-                cm.subscribe_to_el_change()
-                cm.subscribe_to_func_state()
-                cm.subscribe_to_mode_command_obj()
-                cm.subscribe_to_antenna_mode()
-                cm.subscribe_to_stow_sensor()
-                cm.trigger_transmission()
-                with thread_lock:
-                    if thread3 is None:
-                        thread3 = socketio.start_background_task(
-                            states_and_modes_thread, cm
-                        )
-                return jsonify("success")
-            else:
-                logger.warn("Incorrect password entered")
-                return jsonify("Wrong password, try again!!")
-        elif "azimuth" in data and "elevation" in data:
-            logger.info("Pointing button triggered")
-            az = data["azimuth"]
-            el = data["elevation"]
-            try:
-                cm.point_to_coordinates(
-                    float(time.time()), float(az), float(el)
-                )
-            except (Exception, ValueError) as err:
-                logger.error(f"Error encountered: {err}")
-            with thread_lock:
-                if thread is None:
-                    thread = socketio.start_background_task(
-                        background_thread, cm.antenna_node
-                    )
-        elif "sources" in data and data["sources"] == "sun":
-            logger.info("Tracking button triggered")
-            with thread_lock:
-                if thread2 is None:
-                    thread2 = socketio.start_background_task(
-                        background_thread, cm.antenna_node
-                    )
-            cm.track_sun(1)
-        elif "modes" in data:
-            mode = data["modes"]
-            if mode == "Idle":
-                cm.set_idle_mode()
-            elif mode == "Stow":
-                cm.set_stow_mode()
-            elif mode == "Point":
-                cm.set_point_mode()
-        return jsonify("Handled JSON request")
-    
-    elif request.content_type == 'application/x-www-form-urlencoded':
-        if "button" in request.form and request.form["button"] == "Initialize":
-            user_pass = request.form.get("password")
-            cm.clear_all_logs()
-            logger.info("Initialized button triggered")
-            simulator_manager = SimulatorManager()
-            logger.info("Starting vcan interface")
-            logger.info("Passing user password")
-            print(f"Received password: {user_pass}")
-            app.logger.debug(f"Received password: {user_pass}")
-            success = simulator_manager.start_can_interface(user_pass)
-            
-            if success == 0:
-                logger.info("Correct password")
-                simulator_manager.run_container_and_startup_simulator()
-                time.sleep(2)
-                cm.connect_to_network()
-                cm.connect_to_plc_node()
-                cm.subscribe_to_az_change()
-                cm.subscribe_to_el_change()
-                cm.subscribe_to_func_state()
-                cm.subscribe_to_mode_command_obj()
-                cm.subscribe_to_antenna_mode()
-                cm.subscribe_to_stow_sensor()
-                cm.trigger_transmission()
-                with thread_lock:
-                    if thread3 is None:
-                        thread3 = socketio.start_background_task(
-                            states_and_modes_thread, cm
-                        )
-                return jsonify("success")
-            else:
-                logger.warn("Incorrect password entered")
-                return jsonify("Wrong password, try again!!")
-        elif "azimuth" in request.form and "elevation" in request.form:
-            logger.info("Pointing button triggered")
-            az = request.form["azimuth"]
-            el = request.form["elevation"]
-            try:
-                cm.point_to_coordinates(
-                    float(time.time()), float(az), float(el)
-                )
-            except (Exception, ValueError) as err:
-                logger.error(f"Error encountered: {err}")
-            with thread_lock:
-                if thread is None:
-                    thread = socketio.start_background_task(
-                        background_thread, cm.antenna_node
-                    )
-        elif "sources" in request.form and request.form["sources"] == "sun":
-            logger.info("Tracking button triggered")
-            with thread_lock:
-                if thread2 is None:
-                    thread2 = socketio.start_background_task(
-                        background_thread, cm.antenna_node
-                    )
-            cm.track_sun(1)
-        elif "modes" in request.form:
-            mode = request.form["modes"]
-            if mode == "Idle":
-                cm.set_idle_mode()
-            elif mode == "Stow":
-                cm.set_stow_mode()
-            elif mode == "Point":
-                cm.set_point_mode()
-        return render_template("index.html")
-    
-    else:
-        return "Unsupported Media Type", 415
+    # Trigger condition when Initialize button is clicked.
 
+    if (
+        "button" in request.form
+        and request.form["button"] == "Initialize"
+    ):
+        user_pass = request.form["password"]
+        cm.clear_all_logs()
+        # Start VCAN network & simulator
+        logger.info("Intitialized button triggered")
+        simulator_manager = SimulatorManager()
+        logger.info("Starting vcan interface")
+        logger.info("Passing user password")
+        success = simulator_manager.start_can_interface(user_pass)
+
+        # Report incorrect password to user.
+        if success == 0:
+            logger.info("correct password")
+
+            simulator_manager.run_contaier_and_startup_simulator()
+            # Await Simulator to start up
+            time.sleep(2)
+            # Connect to VCAN and Siumlator
+            cm.connect_to_network()
+            cm.connect_to_plc_node()
+            # Subscribe to AZ and EL change.
+            cm.subscribe_to_az_change()
+            cm.subscribe_to_el_change()
+            cm.subscribe_to_func_state()
+            cm.subscribe_to_mode_command_obj()
+            cm.subscribe_to_antenna_mode()
+            cm.subscribe_to_stow_sensor()
+            # Set point mode function below needs to be removed
+            cm.trigger_transmission()
+            global thread3
+            with thread_lock:
+                if thread3 is None:
+                    thread3 = socketio.start_background_task(
+                        states_and_modes_thread, cm
+                    )
+
+            return jsonify("success")
+        if success == 1:
+            logger.warn("Incorrect password entered")
+            return jsonify("Wrong password,Try again!!")
+
+    # Trigger condition when Point button is clicked.
+    if "azimuth" in request.form and "elevation" in request.form:
+        logger.info("Pointing button triggered")
+        # Get AZ and EL from GUI.
+        az = request.form["azimuth"]
+        el = request.form["elevation"]
+        # Call a method to point to Desired AZ & EL
+        try:
+            cm.point_to_coordinates(
+                float(time.time()), float(az), float(el)
+            )
+
+        except (Exception, ValueError) as err:
+            logger.error(f"Error encountered : {err}")
+
+        global thread
+        with thread_lock:
+            if thread is None:
+                thread = socketio.start_background_task(
+                    background_thread, cm.antenna_node
+                )
+
+    if "sources" in request.form and request.form["sources"] == "sun":
+        logger.info("Tracking button triggered")
+        global thread2
+        with thread_lock:
+            if thread is None:
+                thread2 = socketio.start_background_task(
+                    background_thread, cm.antenna_node
+                )
+
+        cm.track_sun(1)
+    if "modes" in request.form and request.form["modes"] == "Idle":
+        cm.set_idle_mode()
+    if "modes" in request.form and request.form["modes"] == "Stow":
+        cm.set_stow_mode()
+    if "modes" in request.form and request.form["modes"] == "Point":
+        cm.set_point_mode()
+    else:
+        pass
+
+    return render_template("index.html")
 
 def connect():
     global thread
