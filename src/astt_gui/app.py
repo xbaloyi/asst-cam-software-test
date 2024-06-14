@@ -82,27 +82,29 @@ def index():
 def start_astt_gui():
     # # Trigger condition when Initialize button is clicked.
 
-    if (
+    # if (
+    #     "button" in request.form
+    #     and request.form["button"] == "Initialize"
+    # ):
+    #     user_pass = os.environ.get('password')
+        
+   if (
         "button" in request.form
         and request.form["button"] == "Initialize"
     ):
-        user_pass = os.environ.get('password')
-        
-
-    # Trigger condition when Initialize button is clicked.
-    # if "button" in request.form and request.form["button"] == "Initialize":
-    #     # Retrieve password from environment variable
-    #     user_pass = os.environ.get("ASTT_PASSWORD")
-    #     if not user_pass:
-    #         return jsonify("Password not set in environment variable"), 400
-
+        user_pass = request.form["password"]
         cm.clear_all_logs()
         # Start VCAN network & simulator
         logger.info("Intitialized button triggered")
         simulator_manager = SimulatorManager()
         logger.info("Starting vcan interface")
         logger.info("Passing user password")
-        print("THE PASSWORD IS ", user_pass)
+        data = request.get_json()
+        password = data['password']
+
+       # Print the password for debugging (remove or mask in production)
+        print(f"Received password: {password}")
+        app.logger.debug(f"Received password: {password}")
         success = simulator_manager.start_can_interface(user_pass)
 
         # Report incorrect password to user.
