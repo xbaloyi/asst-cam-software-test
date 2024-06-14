@@ -82,8 +82,8 @@ def index():
 @app.route("/", methods=["POST"])
 def start_astt_gui():
     global thread, thread2, thread3  # Declare all global variables at once
-
-    # Check the content type of the request
+    app.logger.debug(f"Request Content-Type: {request.content_type}")
+    app.logger.debug(f"Request Data: {request.data}")
     if request.content_type == 'application/json':
         data = request.get_json()
         if "button" in data and data["button"] == "Initialize":
