@@ -88,7 +88,7 @@ def start_astt_gui():
     # ):
     #     user_pass = os.environ.get('password')
         
-   if (
+    if (
         "button" in request.form
         and request.form["button"] == "Initialize"
     ):
