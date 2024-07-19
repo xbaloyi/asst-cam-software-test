@@ -57,7 +57,7 @@ MarkupSafe="2.1.5"
 python-engineio="4.9.0"
 python-socketio="5.11.1"
 six="1.16.0"
-Werkzeug="3.0.1"
+Werkzeug="3.0.3"
 zipp="3.17.0"
 astropy="5.2.2"
 
