@@ -6,3 +6,4 @@ services:
       dockerfile: deployment/Dockerfile
     ports:
       - "5000:5000"
+
