@@ -40,6 +40,6 @@ poetry install
 
 # Start the Flask application
 echo "Starting Flask application."
-python3 src/astt_gui/app.py &
+gunicorn -b 0.0.0.0:5000 src.swet_gui.app:app &
 
 echo "Deployment complete."
