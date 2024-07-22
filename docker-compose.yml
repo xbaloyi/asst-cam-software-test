@@ -12,3 +12,4 @@ services:
 networks:
    astt_network:
     driver: bridge
+
