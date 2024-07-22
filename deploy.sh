@@ -10,8 +10,7 @@ GIT_REPO="https://github.com/xbaloyi/asst-cam-software-test.git"
 if [ ! -d "$HOME/svn-tes" ]; then
   echo "Creating $HOME/svn directory."
   mkdir -p $HOME/svn-tes
- #sudo chown -R $asst:$asst $HOME/svn-tes
- #sudo chmod -R 755 $HOME/svn-tes
+
 fi
 
 # Check if the repository exists
