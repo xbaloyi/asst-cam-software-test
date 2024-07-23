@@ -167,7 +167,7 @@ jobs:
          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
          chmod 600 ~/.ssh/id_rsa
          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-         ssh -i ~/.ssh/id_rsa asst@${{ secrets.SERVER_IP }} "echo 'SSH connection successful'"
+         ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} "echo 'SSH connection successful'"
 
       - name: Install dependencies
         run: |
