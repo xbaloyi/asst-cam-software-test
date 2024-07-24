@@ -147,11 +147,11 @@ jobs:
       run: echo "Will publish the asst software."
 
     - name: Trigger deploy workflow
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          repository: xbaloyi/asst-cam-software-test
-          token: ${{ secrets.GITHUB_TOKEN }}
-          event-type: deploy
+      uses: peter-evans/repository-dispatch@v2
+      with:
+        repository: xbaloyi/asst-cam-software-test
+        token: ${{ secrets.GITHUB_TOKEN }}
+        event-type: deploy
 
   # deploy:
   #   needs: publish
