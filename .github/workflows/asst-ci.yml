@@ -146,44 +146,51 @@ jobs:
     - name: Publish artifact
       run: echo "Will publish the asst software."
 
-  deploy:
-    needs: publish
-    runs-on: self-hosted
+    - name: Trigger deploy workflow
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          repository: xbaloyi/asst-cam-software-test
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: deploy
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      # - name: Deploy to LXC container
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     SSH_USER: ${{ secrets.SERVER_USERNAME }}
-      #     SSH_HOST: ${{ secrets.SERVER_IP }}
-      #   run: |
-      #     scp -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY deploy.sh $SERVER_USERNAME@$SERVER_IP:/tmp/deploy.sh
-      #     ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY $SERVER_USERNAME@$SERVER_IP 'bash /tmp/deploy.sh'
+  # deploy:
+  #   needs: publish
+  #   runs-on: self-hosted
 
-      - name: Install SSH keys and connect
-        run: |
-         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-         chmod 600 ~/.ssh/id_rsa
-         ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-         ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} "echo 'SSH connection successful'"
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+  #     # - name: Deploy to LXC container
+  #     #   env:
+  #     #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  #     #     SSH_USER: ${{ secrets.SERVER_USERNAME }}
+  #     #     SSH_HOST: ${{ secrets.SERVER_IP }}
+  #     #   run: |
+  #     #     scp -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY deploy.sh $SERVER_USERNAME@$SERVER_IP:/tmp/deploy.sh
+  #     #     ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY $SERVER_USERNAME@$SERVER_IP 'bash /tmp/deploy.sh'
 
-      - name: Install dependencies
-        run: |
-          python3 -m venv venv
-          source venv/bin/activate
-          pip install --upgrade pip
-          pip install -r requirements.txt
-        shell: bash
+  #     - name: Install SSH keys and connect
+  #       run: |
+  #        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+  #        chmod 600 ~/.ssh/id_rsa
+  #        ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+  #        ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} "echo 'SSH connection successful'"
+
+  #     - name: Install dependencies
+  #       run: |
+  #         python3 -m venv venv
+  #         source venv/bin/activate
+  #         pip install --upgrade pip
+  #         pip install -r requirements.txt
+  #       shell: bash
           
-      - name: Deploy the changes to container
-        run: |
-          chmod +x deploy.sh
-          ./deploy.sh
+  #     - name: Deploy the changes to container
+  #       run: |
+  #         chmod +x deploy.sh
+  #         ./deploy.sh
           
-      - name: Cleanup SSH keys
-        run: rm -rf ~/.ssh
+  #     - name: Cleanup SSH keys
+  #       run: rm -rf ~/.ssh
          
 
           
@@ -203,4 +210,3 @@ jobs:
       # - name: Start Docker containers
       #   run: docker compose up -d
   
-      
