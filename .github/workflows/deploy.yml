@@ -32,7 +32,7 @@ jobs:
       - name: Run deployment script
         run: |
           chmod +x deploy.sh
-          ./deploy.sh
+          ./deploy2.sh
 
       - name: Cleanup SSH keys
         run: rm -rf ~/.ssh
